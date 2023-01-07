@@ -28,6 +28,7 @@ export class RoomsComponent {
       photos: 'https://www.dearhotelmadrid.com/images/CARROUSEL_THEHOTEL_3.jpg',
       checkinTime: new Date('07-01-2023'),
       checkoutTime: new Date('08-01-2023'),
+      rating: 4.58,
     },
     {
       roomNumber: 2,
@@ -37,6 +38,7 @@ export class RoomsComponent {
       photos: 'https://www.dearhotelmadrid.com/images/CARROUSEL_THEHOTEL_3.jpg',
       checkinTime: new Date('07-01-2023'),
       checkoutTime: new Date('08-01-2023'),
+      rating: 3.43,
     },
     {
       roomNumber: 3,
@@ -46,6 +48,7 @@ export class RoomsComponent {
       photos: 'https://www.dearhotelmadrid.com/images/CARROUSEL_THEHOTEL_3.jpg',
       checkinTime: new Date('07-01-2023'),
       checkoutTime: new Date('08-01-2023'),
+      rating: 2.65,
     },
   ];
 
