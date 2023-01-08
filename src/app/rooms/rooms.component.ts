@@ -1,48 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DoCheck,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Room, RoomList } from './rooms';
+import { HeaderComponent } from '../header/header.component';
+import { RoomsService } from '../services/rooms.service';
 
 @Component({
   selector: 'hinv-rooms',
   templateUrl: './rooms.component.html',
   styleUrls: ['./rooms.component.scss'],
 })
-export class RoomsComponent implements OnInit {
-  ngOnInit(): any {
-    this.roomList = [
-      {
-        roomNumber: 1,
-        roomType: 'Deluxe Room',
-        amenities: 'Air Conditioner, Free WiFi',
-        price: 500,
-        photos:
-          'https://www.dearhotelmadrid.com/images/CARROUSEL_THEHOTEL_3.jpg',
-        checkinTime: new Date('07-01-2023'),
-        checkoutTime: new Date('08-01-2023'),
-        rating: 4.58,
-      },
-      {
-        roomNumber: 2,
-        roomType: 'Greater Deluxe Room',
-        amenities: 'Air Conditioner, Free WiFi',
-        price: 1000,
-        photos:
-          'https://www.dearhotelmadrid.com/images/CARROUSEL_THEHOTEL_3.jpg',
-        checkinTime: new Date('07-01-2023'),
-        checkoutTime: new Date('08-01-2023'),
-        rating: 3.43,
-      },
-      {
-        roomNumber: 3,
-        roomType: 'Private Suite',
-        amenities: 'Air Conditioner, Free WiFi',
-        price: 15000,
-        photos:
-          'https://www.dearhotelmadrid.com/images/CARROUSEL_THEHOTEL_3.jpg',
-        checkinTime: new Date('07-01-2023'),
-        checkoutTime: new Date('08-01-2023'),
-        rating: 2.65,
-      },
-    ];
+export class RoomsComponent
+  implements OnInit, DoCheck, AfterViewInit, OnDestroy
+{
+  constructor(private roomsService: RoomsService) {}
+
+  ngOnInit(): void {
+    this.roomList = this.roomsService.getRooms();
   }
 
   hotelName = 'Hilton Hotel';
@@ -56,15 +35,46 @@ export class RoomsComponent implements OnInit {
     bookedRooms: 5,
   };
 
+  title = 'Room List';
+
   roomList: RoomList[] = [];
+
+  ngAfterViewInit() {
+    console.log('ngAfterViewInit');
+  }
+
+  @ViewChild(HeaderComponent, { static: true })
+  headerComponent!: HeaderComponent;
+
+  ngDoCheck() {
+    console.log('ngDoCheck');
+  }
 
   toggle() {
     this.hideRooms = !this.hideRooms;
+    this.title = 'Rooms List';
   }
 
-  selectRoom(receivedRoom: RoomList) {
-    this.roomList = this.roomList.filter(
-      (room) => room.price !== receivedRoom.price
-    );
+  selectRoom(room: RoomList) {
+    this.selectedRoom = room;
+  }
+
+  addRoom() {
+    const room: RoomList = {
+      roomNumber: 4,
+      roomType: 'Room About to Be Added',
+      amenities: 'Air Conditioner, Free WiFi',
+      price: 15000,
+      photos: 'https://www.dearhotelmadrid.com/images/CARROUSEL_THEHOTEL_3.jpg',
+      checkinTime: new Date('07-01-2023'),
+      checkoutTime: new Date('08-01-2023'),
+      rating: 1.5,
+    };
+
+    this.roomList = [...this.roomList, room];
+  }
+
+  ngOnDestroy() {
+    console.log('ngOnDestroy');
   }
 }
